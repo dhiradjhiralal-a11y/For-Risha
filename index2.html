@@ -27,7 +27,7 @@
     .env.open .env-flap{transform:rotateX(180deg);box-shadow:0 24px 44px rgba(0,0,0,0.12)}
     .photo-out{position:absolute;left:50%;top:50%;transform:translateX(-50%) translateY(110%);width:240px;border-radius:12px;box-shadow:0 24px 60px rgba(0,0,0,0.18);opacity:0;transition:transform .9s ease-in-out,opacity .6s ease-in-out}
 
-    .rose-burst{position:absolute;inset:0;pointer-events:none;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;opacity:0;transition:opacity .4s ease}
+    .rose-burst{position:absolute;inset:0;pointer-events:none;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;opacity:0;transition:opacity .4s ease;z-index:0}
     .rose-burst span{font-size:24px;animation:burst 1s ease-out forwards;opacity:0}
     .rose-burst span:nth-child(1){animation-delay:0s}
     .rose-burst span:nth-child(2){animation-delay:0.1s}
@@ -42,14 +42,9 @@
 
     /* parchment */
     .parch{margin-top:18px;padding:18px;border-radius:12px;background:linear-gradient(180deg,#fffaf2,#fff3ea);border:1px solid rgba(0,0,0,0.03);position:relative;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,0.08);display:none}
-    .parch .letter-image{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.98}
-    .parch .glitter{position:absolute;top:12px;left:50%;width:10px;height:10px;border-radius:50%;background:rgba(212,175,55,0.9);box-shadow:0 0 12px rgba(212,175,55,0.9);animation:glow 1.2s ease-in-out infinite alternate;opacity:0}
-    .parch .glitter:nth-child(1){left:20%;top:20%;animation-delay:0.1s}
-    .parch .glitter:nth-child(2){left:80%;top:30%;animation-delay:0.3s}
-    .parch .glitter:nth-child(3){left:40%;top:55%;animation-delay:0.5s}
-    .parch .glitter:nth-child(4){left:65%;top:70%;animation-delay:0.2s}
-    .parch .glitter:nth-child(5){left:25%;top:75%;animation-delay:0.4s}
-    @keyframes glow{from{opacity:.4;transform:scale(.8)}to{opacity:1;transform:scale(1.2)}}
+    .parch .letter-image{position:relative;width:100%;min-height:320px;border-radius:14px;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center}
+    .parch .letter-image img{width:100%;height:auto;object-fit:contain;display:none}
+    .parch .letter-placeholder{padding:28px 20px;text-align:center;color:#7a5566;font-size:16px;line-height:1.6;display:none}
 
     .read-button{margin-top:20px;text-align:center;display:none}
 
@@ -102,14 +97,11 @@
         <img id="outPhoto" class="photo-out" src="letter.jpg" alt="letter image" onerror="this.style.display='none'" />
       </div>
       <div id="parchment" class="parch">
-        <div class="letter-image" id="letterBg"></div>
-        <div class="letter-text" id="letterFull">
-          <div class="glitter"></div>
-          <div class="glitter"></div>
-          <div class="glitter"></div>
-          <div class="glitter"></div>
-          <p id="fallback" style="text-align:center;font-weight:700;color:var(--accent);margin-top:120px">Aan Rrisha</p>
-          <p id="fallback2" style="margin-top:12px;color:#7a5566">Upload letter.jpg naar de projectmap om de echte foto uit de envelop te tonen.</p>
+        <div class="letter-image">
+          <img id="letterImg" src="" alt="Brief foto" />
+        </div>
+        <div class="letter-placeholder" id="letterPlaceholder">
+          De brief kan hier niet worden geladen. Probeer het later opnieuw.
         </div>
       </div>
       <div class="read-button">
@@ -123,9 +115,6 @@
       <p style="margin-top:18px">— Hiralal Dhiradjkoemar</p>
     </section>
 
-    <div style="margin-top:18px;text-align:center">
-      <small class="small">Tip: upload a file named <strong>letter.jpg</strong> to the same folder to show the real image coming from the envelope.</small>
-    </div>
   </div>
 
   <script>
@@ -144,28 +133,25 @@
     const parch = document.getElementById('parchment');
     const readBtn = document.getElementById('readBtn');
     const readButtonContainer = document.querySelector('.read-button');
+    const letterImg = document.getElementById('letterImg');
+    const letterPlaceholder = document.getElementById('letterPlaceholder');
+
     env2.addEventListener('click', ()=>{
       env2.classList.add('open');
-      // animate photo out of envelope
       out.style.opacity = '1';
       out.style.transform = 'translateX(-50%) translateY(-20%) rotate(-3deg)';
-      // show rose burst
       setTimeout(()=>{
-        const img = new Image();
-        img.onload = function(){
-          const bg = document.getElementById('letterBg');
-          bg.style.backgroundImage = "url('letter.jpg')";
-          document.getElementById('fallback').style.display='none';
-          document.getElementById('fallback2').style.display='none';
-          parch.style.display='block';
+        letterImg.onload = function(){
+          letterPlaceholder.style.display = 'none';
+          letterImg.style.display = 'block';
+          parch.style.display = 'block';
         };
-        img.onerror = function(){
-          document.getElementById('fallback').style.display='block';
-          document.getElementById('fallback2').style.display='block';
-          parch.style.display='block';
+        letterImg.onerror = function(){
+          letterImg.style.display = 'none';
+          letterPlaceholder.style.display = 'block';
+          parch.style.display = 'block';
         };
-        img.src = 'letter.jpg';
-        // show the read button after the letter appears
+        letterImg.src = 'letter.jpg';
         setTimeout(()=>{
           readButtonContainer.style.display='block';
         }, 900);
