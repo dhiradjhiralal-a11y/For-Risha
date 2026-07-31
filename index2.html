@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hallo Risha 🌹</title>
+  <style>
+    :root{--pink:#ffeef2;--accent:#e04b7a;--gold1:#d4af37;--gold2:#f9e29a}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial;background:radial-gradient(circle at 20% 20%, rgba(255,220,230,0.6), transparent 25%), radial-gradient(circle at 80% 80%, rgba(255,235,240,0.6), transparent 20%), linear-gradient(180deg,#fff0f5 0%, #fff 100%);height:100vh;color:#222}
+    .wrap{max-width:900px;margin:36px auto;padding:28px}
+    .card{background:rgba(255,255,255,0.85);border-radius:18px;padding:28px;box-shadow:0 12px 40px rgba(224,102,140,0.14);backdrop-filter: blur(6px)}
+    h1{color:var(--accent);font-size:34px;margin:0 0 8px;text-align:center}
+    p.lead{text-align:center;color:#7a5566}
+
+    .center{display:flex;flex-direction:column;align-items:center}
+    .gold-btn{background:linear-gradient(180deg,var(--gold1),var(--gold2));color:#3a2300;border:0;padding:14px 28px;border-radius:999px;font-weight:700;font-size:18px;box-shadow:0 6px 18px rgba(212,175,55,0.28);cursor:pointer}
+    .ghost{background:transparent;border:2px solid rgba(0,0,0,0.06);padding:10px 16px;border-radius:10px}
+
+    .section{display:none}
+    .active{display:block}
+
+    /* envelope */
+    .envelope{width:280px;height:180px;position:relative;cursor:pointer}
+    .env-body{position:absolute;inset:0;background:linear-gradient(180deg,#fff0f2,#ffeef0);border-radius:10px;border:2px solid rgba(0,0,0,0.04);overflow:hidden}
+    .env-flap{position:absolute;left:0;right:0;top:0;height:60%;background:linear-gradient(180deg,#f8d6de,#fbeeea);transform-origin:top center;border-bottom:2px solid rgba(0,0,0,0.03);transition:transform .9s cubic-bezier(.2,.9,.3,1)}
+    .env.open .env-flap{transform:rotateX(180deg)}
+    .photo-out{position:absolute;left:50%;transform:translateX(-50%) translateY(110%);width:240px;border-radius:10px;box-shadow:0 20px 50px rgba(0,0,0,0.18);transition:transform .9s ease-in-out}
+
+    /* parchment */
+    .parch{margin-top:18px;padding:18px;border-radius:12px;background:linear-gradient(180deg,#fffaf2,#fff3ea);border:1px solid rgba(0,0,0,0.03);position:relative;overflow:hidden}
+    .parch .letter-image{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0.14;filter:blur(0.6px)}
+    .letter-text{position:relative;color:#4b2b2b;line-height:1.6}
+
+    /* petals */
+    .petal{position:fixed;left:50%;top:-50px;font-size:22px;opacity:0.9;animation:fall 6s linear infinite}
+    .petal:nth-child(1){left:20%;animation-delay:0s;animation-duration:7s}
+    .petal:nth-child(2){left:40%;animation-delay:1s;animation-duration:6s}
+    .petal:nth-child(3){left:60%;animation-delay:0.6s;animation-duration:8s}
+    .petal:nth-child(4){left:80%;animation-delay:0.3s;animation-duration:7.5s}
+    @keyframes fall{0%{transform:translateY(-10vh) rotate(0) scale(.9)}100%{transform:translateY(110vh) rotate(360deg) scale(.6);opacity:0.9}}
+
+    .small{font-size:14px;color:#7a5566}
+  </style>
+</head>
+<body>
+  <div class="petal">🌹</div>
+  <div class="petal">🌸</div>
+  <div class="petal">🌺</div>
+  <div class="petal">🌷</div>
+
+  <div class="wrap card">
+    <section id="p1" class="section active">
+      <h1>Hallo Risha 🌹</h1>
+      <p class="lead">Thank you for scanning this QR code. Get ready for a special surprise from a special person who never stopped thinking about you. Take a moment and guess who it is. When you're ready...</p>
+      <div class="center">
+        <button id="open2" class="gold-btn">❤️ Open</button>
+      </div>
+    </section>
+
+    <section id="p2" class="section">
+      <h1 style="text-align:center">Background Music</h1>
+      <p class="lead">This is optional and entirely your choice.</p>
+      <div class="center" style="gap:12px;display:flex;flex-direction:row;justify-content:center">
+        <button id="yes2" class="gold-btn">❤️ Yes, play music</button>
+        <button id="no2" class="ghost">🤍 Continue without music</button>
+      </div>
+      <p class="small" style="text-align:center;margin-top:12px">(If Yes, a YouTube video will open.)</p>
+    </section>
+
+    <section id="p3" class="section center">
+      <h1>💌</h1>
+      <p class="lead">Tap the envelope to open the surprise.</p>
+      <div id="envelope2" class="envelope">
+        <div class="env-body"></div>
+        <div class="env-flap"></div>
+        <!-- photo that will slide out (must be uploaded as letter.jpg) -->
+        <img id="outPhoto" class="photo-out" src="letter.jpg" alt="letter image" onerror="this.style.display='none'" />
+      </div>
+      <div id="parchment" class="parch" style="display:none">
+        <div class="letter-image" id="letterBg"></div>
+        <div class="letter-text" id="letterFull">
+          <!-- full brief will appear here if letter image is not provided -->
+          <p style="text-align:center;font-weight:700;color:var(--accent)">Aan Risha</p>
+          <p>Als je hier je opgemaakte brief wilt, upload `letter.jpg` naar de projectmap en ik zorg dat het uit de envelop komt en op perkament verschijnt.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="p4" class="section">
+      <h1>Dankjewel voor het lezen</h1>
+      <p class="lead">Whatever your answer may be... Thank you for giving my heart a place in your time.</p>
+      <p style="margin-top:18px">— Hiralal Dhiradjkoemar</p>
+    </section>
+
+    <div style="margin-top:18px;text-align:center">
+      <small class="small">Tip: upload a file named <strong>letter.jpg</strong> to the same folder to show the real image coming from the envelope.</small>
+    </div>
+  </div>
+
+  <script>
+    const show = id => document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active', s.id===id));
+    document.getElementById('open2').addEventListener('click', ()=> show('p2'));
+    document.getElementById('no2').addEventListener('click', ()=> show('p3'));
+
+    const YT = 'bMdV_4vUd3k';
+    document.getElementById('yes2').addEventListener('click', ()=>{
+      window.open('https://www.youtube.com/watch?v='+YT, '_blank');
+      show('p3');
+    });
+
+    const env2 = document.getElementById('envelope2');
+    const out = document.getElementById('outPhoto');
+    const parch = document.getElementById('parchment');
+    env2.addEventListener('click', ()=>{
+      env2.classList.add('open');
+      // show only photo coming out
+      out.style.transform = 'translateX(-50%) translateY(0%)';
+      setTimeout(()=>{
+        // then show parchment with subtle background
+        parch.style.display='block';
+        const bg = document.getElementById('letterBg');
+        bg.style.backgroundImage = "url('letter.jpg')";
+        // after a pause, show final screen
+        setTimeout(()=> show('p4'), 7000);
+      },900);
+    });
+  </script>
+</body>
+</html>
