@@ -21,23 +21,45 @@
     .active{display:block}
 
     /* envelope */
-    .envelope{width:280px;height:180px;position:relative;cursor:pointer}
+    .envelope{width:280px;height:180px;position:relative;cursor:pointer;perspective:900px}
     .env-body{position:absolute;inset:0;background:linear-gradient(180deg,#fff0f2,#ffeef0);border-radius:10px;border:2px solid rgba(0,0,0,0.04);overflow:hidden}
-    .env-flap{position:absolute;left:0;right:0;top:0;height:60%;background:linear-gradient(180deg,#f8d6de,#fbeeea);transform-origin:top center;border-bottom:2px solid rgba(0,0,0,0.03);transition:transform .9s cubic-bezier(.2,.9,.3,1)}
-    .env.open .env-flap{transform:rotateX(180deg)}
-    .photo-out{position:absolute;left:50%;transform:translateX(-50%) translateY(110%);width:240px;border-radius:10px;box-shadow:0 20px 50px rgba(0,0,0,0.18);transition:transform .9s ease-in-out}
+    .env-flap{position:absolute;left:0;right:0;top:0;height:60%;background:linear-gradient(180deg,#f8d6de,#fbeeea);transform-origin:top center;border-bottom:2px solid rgba(0,0,0,0.03);transition:transform .9s cubic-bezier(.2,.9,.3,1),box-shadow .3s ease}
+    .env.open .env-flap{transform:rotateX(180deg);box-shadow:0 24px 44px rgba(0,0,0,0.12)}
+    .photo-out{position:absolute;left:50%;top:50%;transform:translateX(-50%) translateY(110%);width:240px;border-radius:12px;box-shadow:0 24px 60px rgba(0,0,0,0.18);opacity:0;transition:transform .9s ease-in-out,opacity .6s ease-in-out}
+
+    .rose-burst{position:absolute;inset:0;pointer-events:none;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;opacity:0;transition:opacity .4s ease}
+    .rose-burst span{font-size:24px;animation:burst 1s ease-out forwards;opacity:0}
+    .rose-burst span:nth-child(1){animation-delay:0s}
+    .rose-burst span:nth-child(2){animation-delay:0.1s}
+    .rose-burst span:nth-child(3){animation-delay:0.15s}
+    .rose-burst span:nth-child(4){animation-delay:0.2s}
+    .rose-burst span:nth-child(5){animation-delay:0.25s}
+    .rose-burst span:nth-child(6){animation-delay:0.3s}
+    .rose-burst span:nth-child(7){animation-delay:0.35s}
+    .rose-burst span:nth-child(8){animation-delay:0.4s}
+    .env.open .rose-burst{opacity:1}
+    @keyframes burst{0%{transform:translateY(0) scale(.6);opacity:0}50%{opacity:1;transform:translateY(-40px) scale(1.1)}100%{transform:translateY(-80px) scale(1);opacity:0}}
 
     /* parchment */
-    .parch{margin-top:18px;padding:18px;border-radius:12px;background:linear-gradient(180deg,#fffaf2,#fff3ea);border:1px solid rgba(0,0,0,0.03);position:relative;overflow:hidden}
-    .parch .letter-image{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0.14;filter:blur(0.6px)}
-    .letter-text{position:relative;color:#4b2b2b;line-height:1.6}
+    .parch{margin-top:18px;padding:18px;border-radius:12px;background:linear-gradient(180deg,#fffaf2,#fff3ea);border:1px solid rgba(0,0,0,0.03);position:relative;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,0.08);display:none}
+    .parch .letter-image{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.98}
+    .parch .glitter{position:absolute;top:12px;left:50%;width:10px;height:10px;border-radius:50%;background:rgba(212,175,55,0.9);box-shadow:0 0 12px rgba(212,175,55,0.9);animation:glow 1.2s ease-in-out infinite alternate;opacity:0}
+    .parch .glitter:nth-child(1){left:20%;top:20%;animation-delay:0.1s}
+    .parch .glitter:nth-child(2){left:80%;top:30%;animation-delay:0.3s}
+    .parch .glitter:nth-child(3){left:40%;top:55%;animation-delay:0.5s}
+    .parch .glitter:nth-child(4){left:65%;top:70%;animation-delay:0.2s}
+    .parch .glitter:nth-child(5){left:25%;top:75%;animation-delay:0.4s}
+    @keyframes glow{from{opacity:.4;transform:scale(.8)}to{opacity:1;transform:scale(1.2)}}
+
+    .read-button{margin-top:20px;text-align:center;display:none}
 
     /* petals */
     .petal{position:fixed;left:50%;top:-50px;font-size:22px;opacity:0.9;animation:fall 6s linear infinite}
-    .petal:nth-child(1){left:20%;animation-delay:0s;animation-duration:7s}
-    .petal:nth-child(2){left:40%;animation-delay:1s;animation-duration:6s}
-    .petal:nth-child(3){left:60%;animation-delay:0.6s;animation-duration:8s}
-    .petal:nth-child(4){left:80%;animation-delay:0.3s;animation-duration:7.5s}
+    .petal:nth-child(1){left:15%;animation-delay:0s;animation-duration:7s}
+    .petal:nth-child(2){left:30%;animation-delay:1s;animation-duration:6.5s}
+    .petal:nth-child(3){left:45%;animation-delay:0.6s;animation-duration:8s}
+    .petal:nth-child(4){left:60%;animation-delay:0.3s;animation-duration:7.2s}
+    .petal:nth-child(5){left:75%;animation-delay:0.4s;animation-duration:7.8s}
     @keyframes fall{0%{transform:translateY(-10vh) rotate(0) scale(.9)}100%{transform:translateY(110vh) rotate(360deg) scale(.6);opacity:0.9}}
 
     .small{font-size:14px;color:#7a5566}
@@ -74,16 +96,24 @@
       <div id="envelope2" class="envelope">
         <div class="env-body"></div>
         <div class="env-flap"></div>
-        <!-- photo that will slide out (must be uploaded as letter.jpg) -->
+        <div class="rose-burst">
+          <span>🌹</span><span>🌸</span><span>🌺</span><span>🌷</span><span>💐</span><span>🌹</span><span>🌸</span><span>R</span>
+        </div>
         <img id="outPhoto" class="photo-out" src="letter.jpg" alt="letter image" onerror="this.style.display='none'" />
       </div>
-      <div id="parchment" class="parch" style="display:none">
+      <div id="parchment" class="parch">
         <div class="letter-image" id="letterBg"></div>
         <div class="letter-text" id="letterFull">
-          <!-- full brief will appear here if letter image is not provided -->
-          <p style="text-align:center;font-weight:700;color:var(--accent)">Aan Risha</p>
-          <p>Als je hier je opgemaakte brief wilt, upload `letter.jpg` naar de projectmap en ik zorg dat het uit de envelop komt en op perkament verschijnt.</p>
+          <div class="glitter"></div>
+          <div class="glitter"></div>
+          <div class="glitter"></div>
+          <div class="glitter"></div>
+          <p id="fallback" style="text-align:center;font-weight:700;color:var(--accent);margin-top:120px">Aan Rrisha</p>
+          <p id="fallback2" style="margin-top:12px;color:#7a5566">Upload letter.jpg naar de projectmap om de echte foto uit de envelop te tonen.</p>
         </div>
+      </div>
+      <div class="read-button">
+        <button id="readBtn" class="gold-btn">Gelezen</button>
       </div>
     </section>
 
@@ -112,18 +142,37 @@
     const env2 = document.getElementById('envelope2');
     const out = document.getElementById('outPhoto');
     const parch = document.getElementById('parchment');
+    const readBtn = document.getElementById('readBtn');
+    const readButtonContainer = document.querySelector('.read-button');
     env2.addEventListener('click', ()=>{
       env2.classList.add('open');
-      // show only photo coming out
-      out.style.transform = 'translateX(-50%) translateY(0%)';
+      // animate photo out of envelope
+      out.style.opacity = '1';
+      out.style.transform = 'translateX(-50%) translateY(-20%) rotate(-3deg)';
+      // show rose burst
       setTimeout(()=>{
-        // then show parchment with subtle background
-        parch.style.display='block';
-        const bg = document.getElementById('letterBg');
-        bg.style.backgroundImage = "url('letter.jpg')";
-        // after a pause, show final screen
-        setTimeout(()=> show('p4'), 7000);
-      },900);
+        const img = new Image();
+        img.onload = function(){
+          const bg = document.getElementById('letterBg');
+          bg.style.backgroundImage = "url('letter.jpg')";
+          document.getElementById('fallback').style.display='none';
+          document.getElementById('fallback2').style.display='none';
+          parch.style.display='block';
+        };
+        img.onerror = function(){
+          document.getElementById('fallback').style.display='block';
+          document.getElementById('fallback2').style.display='block';
+          parch.style.display='block';
+        };
+        img.src = 'letter.jpg';
+        // show the read button after the letter appears
+        setTimeout(()=>{
+          readButtonContainer.style.display='block';
+        }, 900);
+      }, 900);
+    });
+    readBtn.addEventListener('click', ()=>{
+      show('p4');
     });
   </script>
 </body>
