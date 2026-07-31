@@ -42,11 +42,10 @@
 
     /* parchment */
     .parch{margin-top:18px;padding:18px;border-radius:12px;background:linear-gradient(180deg,#fffaf2,#fff3ea);border:1px solid rgba(0,0,0,0.03);position:relative;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,0.08);display:none}
-    .parch .letter-image{position:relative;width:100%;min-height:320px;border-radius:14px;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center}
+    .parch .letter-image{position:relative;width:100%;min-height:220px;border-radius:14px;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center;padding:10px}
     .parch .letter-image img{width:100%;height:auto;object-fit:contain;display:none}
-    .parch .letter-placeholder{padding:28px 20px;text-align:center;color:#7a5566;font-size:16px;line-height:1.6;display:none}
-
-    .read-button{margin-top:20px;text-align:center;display:none}
+    .parch .letter-copy{padding:18px 12px;color:#4a3340;font-size:16px;line-height:1.7}
+    .parch .letter-copy p{margin:0 0 12px}
 
     /* petals */
     .petal{position:fixed;left:50%;top:-50px;font-size:22px;opacity:0.9;animation:fall 6s linear infinite}
@@ -100,12 +99,11 @@
         <div class="letter-image">
           <img id="letterImg" src="" alt="Brief foto" />
         </div>
-        <div class="letter-placeholder" id="letterPlaceholder">
-          De brief kan hier niet worden geladen. Probeer het later opnieuw.
+        <div class="letter-copy" id="letterCopy">
+          <p>Mijn lieve Rrisha,</p>
+          <p>Al heel lang draag ik gevoelens voor jou. Je lach, je stem en de manier waarop jij de dag mooier maakt, bleven bij me, stil en zacht. Dit is mijn brief om te zeggen dat jij belangrijk voor me bent.</p>
+          <p>Ik hoop dat je dit met een open hart leest. Wat je ook voelt of kiest, jouw plek in mijn gedachten blijft speciaal.</p>
         </div>
-      </div>
-      <div class="read-button">
-        <button id="readBtn" class="gold-btn">Gelezen</button>
       </div>
     </section>
 
@@ -131,34 +129,27 @@
     const env2 = document.getElementById('envelope2');
     const out = document.getElementById('outPhoto');
     const parch = document.getElementById('parchment');
-    const readBtn = document.getElementById('readBtn');
-    const readButtonContainer = document.querySelector('.read-button');
     const letterImg = document.getElementById('letterImg');
-    const letterPlaceholder = document.getElementById('letterPlaceholder');
 
     env2.addEventListener('click', ()=>{
       env2.classList.add('open');
       out.style.opacity = '1';
       out.style.transform = 'translateX(-50%) translateY(-20%) rotate(-3deg)';
       setTimeout(()=>{
+        parch.style.display = 'block';
+        out.style.opacity = '0';
+        out.style.transform = 'translateX(-50%) translateY(20%) rotate(-3deg)';
         letterImg.onload = function(){
-          letterPlaceholder.style.display = 'none';
           letterImg.style.display = 'block';
-          parch.style.display = 'block';
         };
         letterImg.onerror = function(){
           letterImg.style.display = 'none';
-          letterPlaceholder.style.display = 'block';
-          parch.style.display = 'block';
         };
         letterImg.src = 'letter.jpg';
         setTimeout(()=>{
-          readButtonContainer.style.display='block';
-        }, 900);
+          show('p4');
+        }, 4200);
       }, 900);
-    });
-    readBtn.addEventListener('click', ()=>{
-      show('p4');
     });
   </script>
 </body>
