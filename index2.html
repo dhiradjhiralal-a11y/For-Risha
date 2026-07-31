@@ -56,6 +56,17 @@
     @keyframes fall{0%{transform:translateY(-10vh) rotate(0) scale(.9)}100%{transform:translateY(110vh) rotate(360deg) scale(.6);opacity:0.9}}
 
     .small{font-size:14px;color:#7a5566}
+    /* Luxury per-page backgrounds and large initials */
+    .section{position:relative}
+    @keyframes shimmer {0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    #p1{background:linear-gradient(120deg, rgba(255,238,245,0.6), rgba(255,246,240,0.6));border-radius:12px;padding:28px;}
+    #p1::before{content:'R';position:absolute;right:12px;bottom:-10px;font-size:220px;color:rgba(224,75,122,0.06);font-weight:900;pointer-events:none}
+    #p2{background:linear-gradient(120deg, rgba(250,240,255,0.65), rgba(245,250,255,0.4));border-radius:12px;padding:28px;background-size:200% 200%;animation:shimmer 8s linear infinite}
+    #p2::before{content:'D';position:absolute;left:-10px;top:0;font-size:220px;color:rgba(30,100,140,0.06);font-weight:900;pointer-events:none}
+    #p3{background:radial-gradient(circle at 20% 20%, rgba(255,228,236,0.6), transparent 20%), linear-gradient(180deg,#fffaf6,#fff0f2);border-radius:12px;padding:28px}
+    #p3::before{content:'R';position:absolute;left:6px;bottom:-6px;font-size:220px;color:rgba(224,75,122,0.04);font-weight:900;pointer-events:none}
+    #p4{background:linear-gradient(135deg, rgba(255,250,240,0.7), rgba(250,240,245,0.5));border-radius:12px;padding:28px}
+    #p4::before{content:'D';position:absolute;right:8px;top:8px;font-size:220px;color:rgba(30,100,140,0.04);font-weight:900;pointer-events:none}
   </style>
 </head>
 <body>
@@ -63,6 +74,8 @@
   <div class="petal">🌸</div>
   <div class="petal">🌺</div>
   <div class="petal">🌷</div>
+
+  <audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
 
   <div class="wrap card">
     <section id="p1" class="section active">
@@ -118,11 +131,14 @@
     document.getElementById('open2').addEventListener('click', ()=> show('p2'));
     document.getElementById('no2').addEventListener('click', ()=> show('p3'));
 
-    const YT = 'bMdV_4vUd3k';
+    const bgMusic = document.getElementById('bgMusic');
     document.getElementById('yes2').addEventListener('click', ()=>{
-      window.open('https://www.youtube.com/watch?v='+YT, '_blank');
+      // play inline background music (user gesture from click allows autoplay)
+      try{ bgMusic.volume = 0.18; bgMusic.currentTime = 0; bgMusic.play().catch(()=>{}); }catch(e){}
       show('p3');
     });
+    // allow stopping music when leaving or finishing
+    const stopMusic = ()=>{ try{ bgMusic.pause(); bgMusic.currentTime = 0; }catch(e){} };
 
     const env2 = document.getElementById('envelope2');
     const out = document.getElementById('outPhoto');
@@ -151,6 +167,7 @@
       }, 900);
     });
     readBtn.addEventListener('click', ()=>{
+      stopMusic();
       show('p4');
     });
   </script>
