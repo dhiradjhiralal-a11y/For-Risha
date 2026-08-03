@@ -5,30 +5,170 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Hallo Risha 🌹</title>
   <style>
-    :root{--pink:#ffeef2;--accent:#e04b7a;--gold1:#d4af37;--gold2:#f9e29a}
+    :root{
+      --pink:#ebc2cb;
+      --accent:#c75a72;
+      --gold:#d4b15a;
+      --gold-soft:#f1e0a8;
+      --ivory:#f7efe1;
+      --ink:#2d1719;
+      --rose:#8b2f44;
+      --shadow:rgba(0,0,0,0.34);
+    }
+
     *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial;background:radial-gradient(circle at 20% 20%, rgba(255,220,230,0.6), transparent 25%), radial-gradient(circle at 80% 80%, rgba(255,235,240,0.6), transparent 20%), linear-gradient(180deg,#fff0f5 0%, #fff 100%);height:100vh;color:#222}
-    .wrap{max-width:900px;margin:36px auto;padding:28px}
-    .card{background:rgba(255,255,255,0.85);border-radius:18px;padding:28px;box-shadow:0 12px 40px rgba(224,102,140,0.14);backdrop-filter: blur(6px)}
-    h1{color:var(--accent);font-size:34px;margin:0 0 8px;text-align:center}
-    p.lead{text-align:center;color:#7a5566}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial;
+      color:#f8ece8;
+      overflow-x:hidden;
+      position:relative;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(171,65,70,0.30), transparent 25%),
+        radial-gradient(circle at 85% 10%, rgba(214,177,90,0.16), transparent 20%),
+        radial-gradient(circle at 90% 85%, rgba(108,22,41,0.24), transparent 18%),
+        linear-gradient(135deg, #140507 0%, #29070d 24%, #5b0e1f 58%, #120508 100%);
+    }
+
+    body::before,
+    body::after{
+      content:"";
+      position:fixed;
+      inset:-10%;
+      pointer-events:none;
+      z-index:0;
+    }
+    body::before{
+      background:radial-gradient(circle at 20% 20%, rgba(212,177,90,0.12), transparent 28%),
+                 radial-gradient(circle at 80% 15%, rgba(212,177,90,0.10), transparent 24%);
+      filter:blur(10px);
+      animation:glowFloat 10s ease-in-out infinite alternate;
+    }
+    body::after{
+      background:linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.03) 50%, transparent 100%);
+      transform:rotate(-8deg);
+      mix-blend-mode:screen;
+    }
+
+    .page-ornaments,
+    .page-glow{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:1;
+    }
+    .page-glow-tl{background:radial-gradient(circle at 0% 0%, rgba(212,177,90,0.16), transparent 30%);}
+    .page-glow-br{background:radial-gradient(circle at 100% 100%, rgba(140,30,49,0.18), transparent 32%);} 
+
+    .ornament{
+      position:absolute;
+      width:240px;
+      height:240px;
+      border:1px solid rgba(212,177,90,0.18);
+      border-radius:50%;
+      opacity:0.8;
+      transform:rotate(45deg);
+    }
+    .ornament::before,
+    .ornament::after{
+      content:"";
+      position:absolute;
+      inset:18px;
+      border:1px solid rgba(212,177,90,0.14);
+      border-radius:50%;
+    }
+    .ornament::after{
+      inset:38px;
+      border-color:rgba(212,177,90,0.10);
+    }
+    .ornament-tl{top:-90px;left:-90px;}
+    .ornament-tr{top:-90px;right:-90px;transform:rotate(-45deg);}
+    .ornament-bl{bottom:-90px;left:-90px;transform:rotate(135deg);}
+    .ornament-br{bottom:-90px;right:-90px;transform:rotate(-135deg);}
+
+    .glow-dot{
+      position:absolute;
+      width:3px;
+      height:3px;
+      border-radius:50%;
+      background:rgba(245,225,160,0.95);
+      box-shadow:0 0 8px rgba(245,225,160,0.8);
+      animation:drift 11s linear infinite;
+      opacity:0.7;
+    }
+    .g1{top:16%;left:12%;animation-duration:13s;}
+    .g2{top:24%;right:16%;animation-duration:10s;}
+    .g3{bottom:20%;left:20%;animation-duration:12s;}
+    .g4{bottom:28%;right:14%;animation-duration:14s;}
+    .g5{top:52%;left:8%;animation-duration:9s;}
+    .g6{top:60%;right:8%;animation-duration:11s;}
+
+    .petal-drop{
+      position:fixed;
+      top:-90px;
+      font-size:16px;
+      color:rgba(177,59,81,0.55);
+      text-shadow:0 0 10px rgba(212,177,90,0.12);
+      pointer-events:none;
+      z-index:1;
+      animation:petalFall 16s linear infinite;
+      opacity:0.7;
+    }
+    .petal-a{left:12%;animation-duration:18s;animation-delay:0s;}
+    .petal-b{left:32%;animation-duration:15s;animation-delay:2s;}
+    .petal-c{left:58%;animation-duration:17s;animation-delay:4s;}
+    .petal-d{left:78%;animation-duration:14s;animation-delay:1s;}
+
+    .wrap{max-width:920px;margin:36px auto;padding:28px;position:relative;z-index:3}
+    .card{
+      background:rgba(255,250,242,0.12);
+      border:1px solid rgba(212,177,90,0.28);
+      border-radius:24px;
+      padding:28px;
+      box-shadow:0 24px 80px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.12);
+      backdrop-filter:blur(20px);
+      position:relative;
+      overflow:hidden;
+    }
+    .card::before{
+      content:"";
+      position:absolute;inset:0;
+      border-radius:inherit;
+      background:linear-gradient(135deg, rgba(255,255,255,0.06), transparent 60%, rgba(212,177,90,0.05));
+      pointer-events:none;
+    }
+
+    h1{color:#f6e2b4;font-size:34px;margin:0 0 10px;text-align:center;font-weight:700;letter-spacing:0.02em}
+    p.lead{text-align:center;color:#f6e7d2;line-height:1.75;max-width:760px;margin:0 auto 16px}
 
     .center{display:flex;flex-direction:column;align-items:center}
-    .gold-btn{background:linear-gradient(180deg,var(--gold1),var(--gold2));color:#3a2300;border:0;padding:14px 28px;border-radius:999px;font-weight:700;font-size:18px;box-shadow:0 6px 18px rgba(212,175,55,0.28);cursor:pointer}
-    .ghost{background:transparent;border:2px solid rgba(0,0,0,0.06);padding:10px 16px;border-radius:10px}
+    .gold-btn{
+      background:linear-gradient(180deg,var(--gold),var(--gold-soft));
+      color:#3f2d0d;
+      border:1px solid rgba(255,255,255,0.3);
+      padding:14px 28px;
+      border-radius:999px;
+      font-weight:700;font-size:18px;
+      box-shadow:0 10px 24px rgba(0,0,0,0.18);
+      cursor:pointer;
+      transition:transform .25s ease, box-shadow .25s ease;
+    }
+    .gold-btn:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(0,0,0,0.24)}
+    .ghost{background:rgba(255,255,255,0.04);border:1px solid rgba(212,177,90,0.24);padding:10px 16px;border-radius:999px;color:#f6e7d2}
 
-    .section{display:none}
-    .active{display:block}
+    .section{display:none;position:relative}
+    .section.active{display:block;animation:sectionFade .8s ease both}
 
     /* envelope */
-    .envelope{width:280px;height:180px;position:relative;cursor:pointer;perspective:900px}
-    .env-body{position:absolute;inset:0;background:linear-gradient(180deg,#fff0f2,#ffeef0);border-radius:10px;border:2px solid rgba(0,0,0,0.04);overflow:hidden}
-    .env-flap{position:absolute;left:0;right:0;top:0;height:60%;background:linear-gradient(180deg,#f8d6de,#fbeeea);transform-origin:top center;border-bottom:2px solid rgba(0,0,0,0.03);transition:transform .9s cubic-bezier(.2,.9,.3,1),box-shadow .3s ease}
-    .env.open .env-flap{transform:rotateX(180deg);box-shadow:0 24px 44px rgba(0,0,0,0.12)}
-    .photo-out{position:absolute;left:50%;top:50%;transform:translateX(-50%) translateY(110%);width:240px;border-radius:12px;box-shadow:0 24px 60px rgba(0,0,0,0.18);opacity:0;transition:transform .9s ease-in-out,opacity .6s ease-in-out}
+    .envelope{width:280px;height:180px;position:relative;cursor:pointer;perspective:900px;margin:20px auto 0}
+    .env-body{position:absolute;inset:0;background:linear-gradient(180deg,#f3ded0,#e8cdb0);border-radius:12px;border:1px solid rgba(132,86,38,0.16);overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,0.6)}
+    .env-flap{position:absolute;left:0;right:0;top:0;height:60%;background:linear-gradient(180deg,#b2425d,#8f1931);transform-origin:top center;border-bottom:1px solid rgba(255,255,255,0.08);transition:transform .9s cubic-bezier(.2,.9,.3,1),box-shadow .3s ease;box-shadow:inset 0 -1px 0 rgba(255,255,255,0.08)}
+    .env.open .env-flap{transform:rotateX(180deg);box-shadow:0 22px 38px rgba(0,0,0,0.22)}
+    .photo-out{position:absolute;left:50%;top:50%;transform:translateX(-50%) translateY(110%);width:240px;border-radius:12px;box-shadow:0 24px 60px rgba(0,0,0,0.24);opacity:0;transition:transform .9s ease-in-out,opacity .6s ease-in-out}
 
     .rose-burst{position:absolute;inset:0;pointer-events:none;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;opacity:0;transition:opacity .4s ease;z-index:0}
-    .rose-burst span{font-size:24px;animation:burst 1s ease-out forwards;opacity:0}
+    .rose-burst span{font-size:24px;animation:burst 1s ease-out forwards;opacity:0;color:#a8324b;text-shadow:0 0 6px rgba(212,177,90,0.2)}
     .rose-burst span:nth-child(1){animation-delay:0s}
     .rose-burst span:nth-child(2){animation-delay:0.1s}
     .rose-burst span:nth-child(3){animation-delay:0.15s}
@@ -41,39 +181,49 @@
     @keyframes burst{0%{transform:translateY(0) scale(.6);opacity:0}50%{opacity:1;transform:translateY(-40px) scale(1.1)}100%{transform:translateY(-80px) scale(1);opacity:0}}
 
     /* parchment */
-    .parch{margin-top:18px;padding:18px;border-radius:12px;background:linear-gradient(180deg,#fffaf2,#fff3ea);border:1px solid rgba(0,0,0,0.03);position:relative;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,0.08);display:none}
-    .parch .letter-image{position:relative;width:100%;min-height:260px;border-radius:14px;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center;padding:0}
+    .parch{margin-top:18px;padding:18px;border-radius:18px;background:linear-gradient(145deg,#fdf8ee 0%, #efe0c4 100%);border:1px solid rgba(186,145,76,0.42);position:relative;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.7);display:none}
+    .parch .letter-image{position:relative;width:100%;min-height:280px;border-radius:14px;overflow:hidden;background:linear-gradient(145deg,#fffdf8,#e9dbbf);display:flex;align-items:center;justify-content:center;padding:10px;border:1px solid rgba(186,145,76,0.32)}
     .parch .letter-image img{width:100%;height:auto;object-fit:contain;display:none}
     .read-button{margin-top:20px;text-align:center;display:none}
 
-    /* petals */
-    .petal{position:fixed;left:50%;top:-50px;font-size:22px;opacity:0.9;animation:fall 6s linear infinite}
-    .petal:nth-child(1){left:15%;animation-delay:0s;animation-duration:7s}
-    .petal:nth-child(2){left:30%;animation-delay:1s;animation-duration:6.5s}
-    .petal:nth-child(3){left:45%;animation-delay:0.6s;animation-duration:8s}
-    .petal:nth-child(4){left:60%;animation-delay:0.3s;animation-duration:7.2s}
-    .petal:nth-child(5){left:75%;animation-delay:0.4s;animation-duration:7.8s}
-    @keyframes fall{0%{transform:translateY(-10vh) rotate(0) scale(.9)}100%{transform:translateY(110vh) rotate(360deg) scale(.6);opacity:0.9}}
+    .small{font-size:14px;color:#f2d7c2}
 
-    .small{font-size:14px;color:#7a5566}
-    /* Luxury per-page backgrounds and large initials */
+    /* page-specific luxury treatment */
     .section{position:relative}
-    @keyframes shimmer {0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-    #p1{background:linear-gradient(120deg, rgba(255,238,245,0.6), rgba(255,246,240,0.6));border-radius:12px;padding:28px;}
-    #p1::before{content:'R';position:absolute;right:12px;bottom:-10px;font-size:220px;color:rgba(224,75,122,0.06);font-weight:900;pointer-events:none}
-    #p2{background:linear-gradient(120deg, rgba(250,240,255,0.65), rgba(245,250,255,0.4));border-radius:12px;padding:28px;background-size:200% 200%;animation:shimmer 8s linear infinite}
-    #p2::before{content:'D';position:absolute;left:-10px;top:0;font-size:220px;color:rgba(30,100,140,0.06);font-weight:900;pointer-events:none}
-    #p3{background:radial-gradient(circle at 20% 20%, rgba(255,228,236,0.6), transparent 20%), linear-gradient(180deg,#fffaf6,#fff0f2);border-radius:12px;padding:28px}
-    #p3::before{content:'R';position:absolute;left:6px;bottom:-6px;font-size:220px;color:rgba(224,75,122,0.04);font-weight:900;pointer-events:none}
-    #p4{background:linear-gradient(135deg, rgba(255,250,240,0.7), rgba(250,240,245,0.5));border-radius:12px;padding:28px}
-    #p4::before{content:'D';position:absolute;right:8px;top:8px;font-size:220px;color:rgba(30,100,140,0.04);font-weight:900;pointer-events:none}
+    #p1{background:linear-gradient(135deg, rgba(94,22,39,0.30), rgba(23,10,15,0.22));border-radius:18px;padding:28px;}
+    #p1::before{content:'R';position:absolute;right:8px;bottom:-10px;font-size:220px;color:rgba(212,177,90,0.08);font-weight:900;pointer-events:none}
+    #p2{background:linear-gradient(135deg, rgba(74,17,31,0.28), rgba(18,8,13,0.20));border-radius:18px;padding:28px;}
+    #p2::before{content:'D';position:absolute;left:-10px;top:0;font-size:220px;color:rgba(212,177,90,0.07);font-weight:900;pointer-events:none}
+    #p3{background:linear-gradient(135deg, rgba(95,23,40,0.24), rgba(18,8,13,0.20));border-radius:18px;padding:28px;}
+    #p3::before{content:'R';position:absolute;left:10px;bottom:-8px;font-size:220px;color:rgba(212,177,90,0.06);font-weight:900;pointer-events:none}
+    #p4{background:linear-gradient(135deg, rgba(88,20,35,0.30), rgba(18,8,13,0.22));border-radius:18px;padding:28px;}
+    #p4::before{content:'D';position:absolute;right:8px;top:8px;font-size:220px;color:rgba(212,177,90,0.06);font-weight:900;pointer-events:none}
+
+    @keyframes glowFloat{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(0,-12px,0) scale(1.03)}}
+    @keyframes drift{0%{transform:translateY(0) translateX(0);opacity:0}10%{opacity:0.7}100%{transform:translateY(120vh) translateX(30px);opacity:0}}
+    @keyframes petalFall{0%{transform:translateY(0) rotate(0deg);opacity:0}15%{opacity:0.7}100%{transform:translateY(110vh) rotate(360deg);opacity:0}}
+    @keyframes sectionFade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
   </style>
 </head>
 <body>
-  <div class="petal">🌹</div>
-  <div class="petal">🌸</div>
-  <div class="petal">🌺</div>
-  <div class="petal">🌷</div>
+  <div class="page-glow page-glow-tl"></div>
+  <div class="page-glow page-glow-br"></div>
+  <div class="page-ornaments" aria-hidden="true">
+    <div class="ornament ornament-tl"></div>
+    <div class="ornament ornament-tr"></div>
+    <div class="ornament ornament-bl"></div>
+    <div class="ornament ornament-br"></div>
+    <div class="glow-dot g1"></div>
+    <div class="glow-dot g2"></div>
+    <div class="glow-dot g3"></div>
+    <div class="glow-dot g4"></div>
+    <div class="glow-dot g5"></div>
+    <div class="glow-dot g6"></div>
+  </div>
+  <div class="petal-drop petal-a">✿</div>
+  <div class="petal-drop petal-b">❀</div>
+  <div class="petal-drop petal-c">✿</div>
+  <div class="petal-drop petal-d">❀</div>
 
   <audio id="bgMusic" src="Main Agar Kahoon - Om Shanti Om (2007) - EASY Piano Tutorial.mp3" loop></audio>
 
